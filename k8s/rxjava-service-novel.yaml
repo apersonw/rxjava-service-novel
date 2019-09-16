@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rxjava-service-novel
+  labels:
+    app: rxjava-service-novel
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: rxjava-service-novel
+      labels:
+        app: rxjava-service-novel
+    spec:
+      containers:
+        - name: rxjava-service-novel
+          image: registry.cn-shanghai.aliyuncs.com/taro-mall/rxjava-service-novel:latest
+          imagePullPolicy: Always
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: rxjava-service-novel
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rxjava-service-novel
+spec:
+  selector:
+    app: rxjava-service-novel
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  type: NodePort
